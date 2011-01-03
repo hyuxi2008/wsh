@@ -4,9 +4,14 @@ sources = wsh/wsh.h wsh/wsh.c \
 	wsh/wsh_readline.h wsh/wsh_readline.c \
 	wsh/wsh_wrapper.h 
 
+# Enable Linux build by default
+sources += wrapper/linux/wsh_cmds.c \
+	wrapper/linux/wsh_wrapper.c \
+	wrapper/linux/main.c
+
 wshell: $(sources)
 	cc -I. -std=c99 -Wall -g $(filter %.c,$(sources)) -o $@
 
 clean:
 	rm -f $(patsubst %.c,%.o,$(filter %.c,$(sources)))
-	rm -f wsh
+	rm -f wshell
