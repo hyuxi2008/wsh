@@ -38,8 +38,8 @@
  * 2010/10/15 PL migrated from PPC405 to PPC440
  */
 
-#ifndef WSH_H  /* prevent circular inclusions */
-#define WSH_H  /* by using protection macros */
+#ifndef WSH_H			/* prevent circular inclusions */
+#define WSH_H			/* by using protection macros */
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,11 +54,11 @@ extern "C" {
 #define PROMPT_LENGTH   3
 
 // shell commands
-typedef int (*wsh_cmd)(int argc, char** argv);
+typedef int (*wsh_cmd) (int argc, char **argv);
 
 typedef struct _wsh_cmd_t {
-  const char* name;
-  wsh_cmd     func;
+	const char *name;
+	wsh_cmd func;
 } wsh_cmd_t;
 
 // -----------------------------------------------------------------------------
@@ -66,11 +66,10 @@ typedef struct _wsh_cmd_t {
 // -----------------------------------------------------------------------------
 
 // general wsh start-up function
-void wsh (void);
+void wsh(void);
 
 
 #ifdef __cplusplus
 }
-#endif 
-
-#endif //WSH_H
+#endif
+#endif				//WSH_H

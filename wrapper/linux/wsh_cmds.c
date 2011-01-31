@@ -40,56 +40,56 @@
  */
 
 // Project-specific includes including hardware abstraction layer (hal)
-#include "wsh/wsh.h"          // support for embedded shell
-#include "wsh/wsh_cmds.h"     // wsh standard commands
-#include "wsh/wsh_wrapper.h"  // function prototypes
+#include "wsh/wsh.h"		// support for embedded shell
+#include "wsh/wsh_cmds.h"	// wsh standard commands
+#include "wsh/wsh_wrapper.h"	// function prototypes
 
-#include <string.h>           // string functions (strcmp)
+#include <string.h>		// string functions (strcmp)
 #include <stdint.h>
 #include <stdio.h>
 
 
 // implementation of prototype function: wsh() prologue
-int wsh_prologue (void)
+int wsh_prologue(void)
 {
-  return 0;
+	return 0;
 }
 
 // implementation of prototype function: wsh() epilogue
-int wsh_epilogue (void)
+int wsh_epilogue(void)
 {
-  return 0;
+	return 0;
 }
 
 // --- example functions ------------------------------
 
 static uint8_t demo = 1;
 
-static void set_demo (uint8_t val)
+static void set_demo(uint8_t val)
 {
-  demo = val;
+	demo = val;
 }
 
-static uint8_t get_demo (void)
+static uint8_t get_demo(void)
 {
-  return demo;
+	return demo;
 }
 
 // --------------------------------------------------
 
-static void print_unknown_arg (char* arg)
+static void print_unknown_arg(char *arg)
 {
-  printf("*** unknown argument '%s'\n", arg);
+	printf("*** unknown argument '%s'\n", arg);
 }
 
-static void print_unknown_cmd (char* cmd)
+static void print_unknown_cmd(char *cmd)
 {
-  printf("*** unknown command '%s'\n", cmd);
+	printf("*** unknown command '%s'\n", cmd);
 }
 
-static void print_too_many_args (void)
+static void print_too_many_args(void)
 {
-  printf("*** too many arguments\n");
+	printf("*** too many arguments\n");
 }
 
 //static void print_non_numeric_arg (char* cmd)
@@ -99,84 +99,84 @@ static void print_too_many_args (void)
 
 // --------------------------------------------------
 
-static int check_argc (int argc, int lower, int upper, char* usage)
+static int check_argc(int argc, int lower, int upper, char *usage)
 {
-  if (argc < lower) {
-    printf("*** argument missing:\n");
-    printf("usage: %s\n", usage);
-    return -1;
-  }
-  if (argc > upper) {
-    print_too_many_args();
-    return -1;
-  }
-  return 0;
+	if (argc < lower) {
+		printf("*** argument missing:\n");
+		printf("usage: %s\n", usage);
+		return -1;
+	}
+	if (argc > upper) {
+		print_too_many_args();
+		return -1;
+	}
+	return 0;
 }
 
-static int check_cmd (int argc, char*top_usage, char**usage)
+static int check_cmd(int argc, char *top_usage, char **usage)
 {
-  if (argc < 1) {
-    printf("*** command missing\n");
-    printf("usage: %s\n", top_usage);
-    while(*usage != 0) {
-      printf("         %s\n", *usage);
-      usage++;
-    }
-    return -1;
-  }
-  return 0;
+	if (argc < 1) {
+		printf("*** command missing\n");
+		printf("usage: %s\n", top_usage);
+		while (*usage != 0) {
+			printf("         %s\n", *usage);
+			usage++;
+		}
+		return -1;
+	}
+	return 0;
 }
 
-static int my_cmd_demo (int argc, char** argv)
+static int my_cmd_demo(int argc, char **argv)
 {
-  char* usage[] = { "set   load demo (1 | 2 | 3)",
-                    "get   print current demo configuration",
-                    0 };
+	char *usage[] = { "set   load demo (1 | 2 | 3)",
+		"get   print current demo configuration",
+		0
+	};
 
-  if (check_cmd(argc, "demo", usage))  // check for existing arguments
-    return -1;
+	if (check_cmd(argc, "demo", usage))	// check for existing arguments
+		return -1;
 
-  if (strcmp("get", argv[0])==0) {
-    if (check_argc(argc, 1, 1, ""))    // check # of arguments
-      return -1;
+	if (strcmp("get", argv[0]) == 0) {
+		if (check_argc(argc, 1, 1, ""))	// check # of arguments
+			return -1;
 
-    // get demo configuration
-    printf("demo configuration %d\n", get_demo());
+		// get demo configuration
+		printf("demo configuration %d\n", get_demo());
 
-  } else if (strcmp("set", argv[0])==0) {
-    if (check_argc(argc, 2, 2, "demo set ID"))    // check # of args: 2 required
-      return -1;
+	} else if (strcmp("set", argv[0]) == 0) {
+		if (check_argc(argc, 2, 2, "demo set ID"))	// check # of args: 2 required
+			return -1;
 
-    // set demo configuration
-    unsigned long val = wsh_extract_val(argv[1]);  // extract numeric value
+		// set demo configuration
+		unsigned long val = wsh_extract_val(argv[1]);	// extract numeric value
 
-    if ((val < 1) || (val > 3)) {
-      print_unknown_arg(argv[1]);
-      return -1;
-    }
+		if ((val < 1) || (val > 3)) {
+			print_unknown_arg(argv[1]);
+			return -1;
+		}
 
-    set_demo(val);
-    printf("selecting demo %d\n", get_demo());
+		set_demo(val);
+		printf("selecting demo %d\n", get_demo());
 
-  } else {
-    print_unknown_cmd(argv[0]);
-    return -1;
-  }
-  return 0;
+	} else {
+		print_unknown_cmd(argv[0]);
+		return -1;
+	}
+	return 0;
 }
 
 
 // specify shell commands
-wsh_cmd_t shell_commands[] =
-  {
-    { "rd",         wsh_cmd_rd },
-    { "wr",         wsh_cmd_wr },
-    { "demo",       my_cmd_demo },
-    { "history",    wsh_cmd_history },
-    { "clear",      wsh_cmd_clear },
-    { "quit",       wsh_cmd_quit },
-    { "help",       wsh_cmd_help },
-    { 0, 0 },  // must be the last entry
-  };
+wsh_cmd_t shell_commands[] = {
+	{"rd", wsh_cmd_rd},
+	{"wr", wsh_cmd_wr},
+	{"demo", my_cmd_demo},
+	{"history", wsh_cmd_history},
+	{"clear", wsh_cmd_clear},
+	{"quit", wsh_cmd_quit},
+	{"help", wsh_cmd_help},
+	{0, 0},			// must be the last entry
+};
 
 wsh_cmd_t *wsh_cmds = shell_commands;

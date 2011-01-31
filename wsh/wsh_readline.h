@@ -38,8 +38,8 @@
  * 2010/10/15 PL migrated from PPC405 to PPC440
  */
 
-#ifndef WSH_READLINE_H  /* prevent circular inclusions */
-#define WSH_READLINE_H  /* by using protection macros */
+#ifndef WSH_READLINE_H		/* prevent circular inclusions */
+#define WSH_READLINE_H		/* by using protection macros */
 
 #ifdef __cplusplus
 extern "C" {
@@ -50,11 +50,10 @@ extern "C" {
 // -----------------------------------------------------------------------------
 
 int wsh_readline_init();
-const char* wsh_readline();
+const char *wsh_readline();
 
 
 #ifdef __cplusplus
 }
-#endif 
-
-#endif //WSH_READLINE_H
+#endif
+#endif				//WSH_READLINE_H
