@@ -19,14 +19,14 @@
  *
  */
 
-#ifndef WSH_HISTORY_H		/* prevent circular inclusions */
-#define WSH_HISTORY_H		/* by using protection macros */
+#ifndef WSH_HISTORY_H
+#define WSH_HISTORY_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "wsh/wsh.h"		// support for embedded shell
+#include "wsh/wsh.h"
 
 typedef struct _hist_entry {
 	char line[LINE_SIZE + 1];
@@ -34,8 +34,8 @@ typedef struct _hist_entry {
 } history_entry_t;
 
 typedef enum _hist_mode {
-	history_mode_normal,	// no history element is displayed 
-	history_mode_browse,	// get_next & get_prev 
+	history_mode_normal,	/* no history element is displayed */
+	history_mode_browse,	/* get_next & get_prev */
 } history_mode_t;
 
 typedef struct _hist_state {
@@ -45,10 +45,6 @@ typedef struct _hist_state {
 	int size;
 	int base;
 } history_state_t;
-
-// -----------------------------------------------------------------------------
-// General Functions
-// -----------------------------------------------------------------------------
 
 history_entry_t *history_get_new(history_state_t * st);
 history_entry_t *history_get_next(history_state_t * st);
@@ -61,4 +57,4 @@ void history_print_debug(history_state_t * st);
 #ifdef __cplusplus
 }
 #endif
-#endif				//WSH_HISTORY_H
+#endif
