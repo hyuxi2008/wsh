@@ -25,7 +25,12 @@
 
 #include <stdlib.h>
 
-int wsh_run;
+static int wsh_run;
+
+void wsh_stop(void)
+{
+	wsh_run = 0;
+}
 
 void wsh(void)
 {

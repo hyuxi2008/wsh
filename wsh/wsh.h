@@ -48,6 +48,7 @@ typedef struct _wsh_cmd_t {
 
 // general wsh start-up function
 void wsh(void);
+void wsh_stop(void);
 
 
 #ifdef __cplusplus

@@ -19,9 +19,8 @@
  *
  */
 
-#include "wsh/wsh.h"		// support for embedded shell
-#include "wsh/wsh_wrapper.h"	// function prototypes
-
+#include "wsh/wsh.h"
+#include "wsh/wsh_wrapper.h"
 
 extern int wsh_run;		// global variable to allow to quit wsh()
 
@@ -103,7 +102,7 @@ int wsh_cmd_clear(int argc, char **argv)
 
 int wsh_cmd_quit(int argc, char **argv)
 {
-	wsh_run = 0;		// quit wsh()
+	wsh_stop();
 	return 0;
 }
 
