@@ -19,20 +19,15 @@
  *
  */
 
-#ifndef WSH_CMDS_H		/* prevent circular inclusions */
-#define WSH_CMDS_H		/* by using protection macros */
+#ifndef WSH_CMDS_H
+#define WSH_CMDS_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "wsh/wsh.h"		// support for embedded shell
+#include "wsh/wsh.h"
 
-// -----------------------------------------------------------------------------
-// General Functions
-// -----------------------------------------------------------------------------
-
-// all registered for wsh usage in project-specific file wsh_cmds.c
 unsigned long wsh_extract_val(const char *nptr);
 int wsh_cmd_rd(int argc, char **argv);
 int wsh_cmd_wr(int argc, char **argv);
@@ -41,8 +36,7 @@ int wsh_cmd_clear(int argc, char **argv);
 int wsh_cmd_quit(int argc, char **argv);
 int wsh_cmd_help(int argc, char **argv);
 
-
 #ifdef __cplusplus
 }
 #endif
-#endif				//WSH_CMDS_H
+#endif
