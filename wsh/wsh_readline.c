@@ -19,29 +19,6 @@
  *
  */
 
-/*
- * Embedded Shell Functionality
- * ============================
- *
- * Description
- * -----------
- * Minimalistic shell functionality for embedded processors.
- * Created by Daniel Wagner, therefore named wagi shell (wsh).
- *
- * Notes
- * -----
- * Employs VT100 Terminal Control Sequences and VT100 Cursor Control Sequences:
- * http://braun-home.net/michael/info/misc/VT100_commands.htm
- * http://www.mit.edu/~vona/MSim/vona/terminal/VT100_Escape_Codes.html
- * http://www.math.utah.edu/docs/info/screen_10.html
- *
- * History
- * -------
- * 2007/09/05 DW created
- * 2010/10/15 PL migrated from PPC405 to PPC440
- * 2010/10/18 PL fixed the overwrite-mode bug: don't always increment EOL counter
- */
-
 #include "wsh/wsh_readline.h"	// shell I/O functionality
 #include "wsh/wsh.h"		// support for embedded shell
 #include "wsh/wsh_history.h"	// command history

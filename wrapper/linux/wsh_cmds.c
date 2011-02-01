@@ -19,26 +19,6 @@
  *
  */
 
-/*
- * Embedded Shell Functionality
- * ============================
- *
- * Description
- * -----------
- * Minimalistic shell functionality for embedded processors.
- * Created by Daniel Wagner, therefore named wagi shell (wsh).
- *
- * Notes
- * -----
- * Employs VT100 Terminal Control Sequences and VT100 Cursor Control Sequences.
- *
- * History
- * -------
- * 2007/09/05 DW created
- * 2010/10/15 PL migrated from PPC405 to PPC440
- * 2010/11/08 PL added prototype functions for wsh prologue and epilogue
- */
-
 // Project-specific includes including hardware abstraction layer (hal)
 #include "wsh/wsh.h"		// support for embedded shell
 #include "wsh/wsh_cmds.h"	// wsh standard commands

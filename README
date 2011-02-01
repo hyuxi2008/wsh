@@ -1,0 +1,17 @@
+Embedded Shell Functionality
+============================
+
+Description
+-----------
+Minimalistic shell functionality for embedded processors.
+Created by Daniel Wagner, therefore named wagi shell (wsh).
+
+Notes
+-----
+
+Employs VT100 Terminal Control Sequences and VT100 Cursor Control Sequences.
+
+http://braun-home.net/michael/info/misc/VT100_commands.htm
+http://www.mit.edu/~vona/MSim/vona/terminal/VT100_Escape_Codes.html
+http://www.math.utah.edu/docs/info/screen_10.html
+

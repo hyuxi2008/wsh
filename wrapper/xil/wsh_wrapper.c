@@ -19,28 +19,6 @@
  *
  */
 
-/*
- * Embedded Shell Functionality
- * ============================
- *
- * Description
- * -----------
- * Minimalistic shell functionality for embedded processors.
- * Created by Daniel Wagner, therefore named wagi shell (wsh).
- *
- * Notes
- * -----
- * Employs VT100 Terminal Control Sequences and VT100 Cursor Control Sequences.
- *
- * History
- * -------
- * 2007/09/05 DW created
- * 2010/10/15 PL migrated from PPC405 to PPC440
- * 2010/10/18 PL modified the wsh_debug_printf() to print to the second RS232
- * 2010/10/20 PL wsh_debug_printf() is now enabled through #define WSH_DEBUG 1
- * 2010/10/23 PL changed to slim version of vprintf() w/o float and double support
- */
-
 // Project-specific includes including hardware abstraction layer (hal)
 #include "wsh/wsh_wrapper.h"	// function prototypes
 #include "hal/hal.h"		// hardware abstraction layer (HAL)
