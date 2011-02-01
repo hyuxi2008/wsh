@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef WSH_H			/* prevent circular inclusions */
-#define WSH_H			/* by using protection macros */
+#ifndef WSH_H
+#define WSH_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,13 +28,12 @@ extern "C" {
 
 #define WSH_VERSION "wsh version 0.3\n"
 
-// history size: nr of entries + 1 (for the current command line)
+/* history size: nr of entries + 1 (for the current command line) */
 #define HISTORY_ENTRIES 11
 #define LINE_SIZE       63
 #define PROMPT_STRING   "$> "
 #define PROMPT_LENGTH   3
 
-// shell commands
 typedef int (*wsh_cmd) (int argc, char **argv);
 
 typedef struct _wsh_cmd_t {
@@ -42,16 +41,10 @@ typedef struct _wsh_cmd_t {
 	wsh_cmd func;
 } wsh_cmd_t;
 
-// -----------------------------------------------------------------------------
-// General Functions
-// -----------------------------------------------------------------------------
-
-// general wsh start-up function
 void wsh(void);
 void wsh_stop(void);
-
 
 #ifdef __cplusplus
 }
 #endif
-#endif				//WSH_H
+#endif
