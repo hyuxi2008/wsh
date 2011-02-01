@@ -22,26 +22,26 @@
 #include "wsh/wsh.h"
 #include "wsh/wsh_wrapper.h"
 
-// --------------------------------------------------
-
 static unsigned long extract_val(const char *nptr)
 {
 	char *end;
-	return wsh_strtoul(nptr, &end, 0);	// should handle errno somehow, but didn't get it working...
-}
 
-// --------------------------------------------------
+	return wsh_strtoul(nptr, &end, 0);
+}
 
 int wsh_cmd_rd(int argc, char **argv)
 {
+	unsigned long addr;
+	unsigned long nr_words;
+
 	if (!argc) {
 		wsh_printf("not enough arguments\n");
 		wsh_printf("usage: rd ADDR [LENGTH]\n");
 		return -1;
 	}
 
-	unsigned long addr = extract_val(argv[0]);
-	unsigned long nr_words = 1;
+	addr = extract_val(argv[0]);
+	nr_words = 1;
 
 	addr &= ~0x3;
 
@@ -64,22 +64,26 @@ int wsh_cmd_rd(int argc, char **argv)
 
 int wsh_cmd_wr(int argc, char **argv)
 {
+	unsigned long addr;
+	unsigned long val;
+	unsigned long nr_words;
+	unsigned long addr_bak;
+
 	if (argc < 2) {
 		wsh_printf("not enough arguments\n");
 		wsh_printf("usage: wr ADDR VALUE [LENGTH]\n");
 		return -1;
 	}
 
-	unsigned long addr = extract_val(argv[0]);
-	unsigned long val = extract_val(argv[1]);
-	unsigned long nr_words = 1;
-	unsigned long addr_bak;
+	addr = extract_val(argv[0]);
+	val = extract_val(argv[1]);
+	nr_words = 1;
 
 	addr &= ~0x3;
 	addr_bak = addr;
 
 	if (argc == 3)
-		nr_words = extract_val(argv[2]);	// extract length
+		nr_words = extract_val(argv[2]);
 
 	for (int i = 0; i < nr_words; i++) {
 		*(unsigned long *) addr = val;
@@ -93,13 +97,16 @@ int wsh_cmd_wr(int argc, char **argv)
 
 int wsh_cmd_clear(int argc, char **argv)
 {
-	wsh_printf("\e[2J");	// erase entire screen (cursor doesn't move)
+	/* erase entire screen (cursor doesn't move) */
+	wsh_printf("\e[2J");
+
 	return 0;
 }
 
 int wsh_cmd_quit(int argc, char **argv)
 {
 	wsh_stop();
+
 	return 0;
 }
 
@@ -108,9 +115,8 @@ int wsh_cmd_help(int argc, char **argv)
 	wsh_printf(WSH_VERSION);
 
 	wsh_printf("\nregistered commands:\n");
-	for (int i = 0; wsh_cmds[i].name; i++) {
+	for (int i = 0; wsh_cmds[i].name; i++)
 		wsh_printf("  %s\n", wsh_cmds[i].name);
-	}
 
 	return 0;
 }
