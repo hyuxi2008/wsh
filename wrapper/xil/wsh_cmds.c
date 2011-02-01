@@ -28,19 +28,6 @@
 
 #include <string.h>		// string functions (strcmp)
 
-
-// implementation of prototype function: wsh() prologue
-int wsh_prologue(void)
-{
-	return 0;
-}
-
-// implementation of prototype function: wsh() epilogue
-int wsh_epilogue(void)
-{
-	return 0;
-}
-
 // --- example functions ------------------------------
 
 static uint8 demo = 1;

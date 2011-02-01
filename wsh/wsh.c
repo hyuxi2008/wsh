@@ -23,14 +23,7 @@
 #include "wsh/wsh_readline.h"	// shell I/O functionality
 #include "wsh/wsh_wrapper.h"	// function prototypes
 
-
-// function prototypes to be defined in wsh_cmds.c (project-specific)
-extern int wsh_prologue(void);
-extern int wsh_epilogue(void);
-
-
 int wsh_run;			// global variable to allow to quit wsh()
-
 
 // general wsh start-up function
 void wsh(void)
@@ -41,8 +34,6 @@ void wsh(void)
 	wsh_readline_init();
 
 	wsh_printf(WSH_VERSION);
-
-	wsh_prologue();		// call entry function (user-defined)
 
 	while (wsh_run) {
 		const char *line = wsh_readline();
@@ -80,8 +71,6 @@ void wsh(void)
 				wsh_printf("unknown command '%s'\n", argv[0]);
 		}
 	}
-
-	wsh_epilogue();		// call exit function (user-defined)
 
 	wsh_printf("\n  quit wsh()\n");
 }
