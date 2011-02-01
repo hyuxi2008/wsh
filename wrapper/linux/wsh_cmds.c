@@ -30,6 +30,12 @@
 
 // --- example functions ------------------------------
 
+static unsigned long extract_val(const char *nptr)
+{
+	char *end;
+	return wsh_strtoul(nptr, &end, 0);	// should handle errno somehow, but didn't get it working...
+}
+
 static uint8_t demo = 1;
 
 static void set_demo(uint8_t val)
@@ -116,7 +122,7 @@ static int my_cmd_demo(int argc, char **argv)
 			return -1;
 
 		// set demo configuration
-		unsigned long val = wsh_extract_val(argv[1]);	// extract numeric value
+		unsigned long val = extract_val(argv[1]);	// extract numeric value
 
 		if ((val < 1) || (val > 3)) {
 			print_unknown_arg(argv[1]);

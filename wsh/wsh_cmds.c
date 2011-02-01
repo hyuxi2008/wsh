@@ -22,12 +22,9 @@
 #include "wsh/wsh.h"
 #include "wsh/wsh_wrapper.h"
 
-extern int wsh_run;		// global variable to allow to quit wsh()
-
-
 // --------------------------------------------------
 
-unsigned long wsh_extract_val(const char *nptr)
+static unsigned long extract_val(const char *nptr)
 {
 	char *end;
 	return wsh_strtoul(nptr, &end, 0);	// should handle errno somehow, but didn't get it working...
@@ -43,13 +40,13 @@ int wsh_cmd_rd(int argc, char **argv)
 		return -1;
 	}
 
-	unsigned long addr = wsh_extract_val(argv[0]);
+	unsigned long addr = extract_val(argv[0]);
 	unsigned long nr_words = 1;
 
 	addr &= ~0x3;
 
 	if (argc > 1)
-		nr_words = wsh_extract_val(argv[1]);
+		nr_words = extract_val(argv[1]);
 
 	wsh_cache_data_flush((unsigned long *) addr, nr_words * 4);
 
@@ -73,8 +70,8 @@ int wsh_cmd_wr(int argc, char **argv)
 		return -1;
 	}
 
-	unsigned long addr = wsh_extract_val(argv[0]);
-	unsigned long val = wsh_extract_val(argv[1]);
+	unsigned long addr = extract_val(argv[0]);
+	unsigned long val = extract_val(argv[1]);
 	unsigned long nr_words = 1;
 	unsigned long addr_bak;
 
@@ -82,7 +79,7 @@ int wsh_cmd_wr(int argc, char **argv)
 	addr_bak = addr;
 
 	if (argc == 3)
-		nr_words = wsh_extract_val(argv[2]);	// extract length
+		nr_words = extract_val(argv[2]);	// extract length
 
 	for (int i = 0; i < nr_words; i++) {
 		*(unsigned long *) addr = val;
