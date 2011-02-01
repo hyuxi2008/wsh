@@ -19,28 +19,33 @@
  *
  */
 
-#include "wsh/wsh_history.h"	// command history
-#include "wsh/wsh_wrapper.h"	// function prototypes
-
+#include "wsh/wsh_history.h"
+#include "wsh/wsh_wrapper.h"
 
 static inline int history_incr_base(history_state_t * st)
 {
 	st->base = st->base >= HISTORY_ENTRIES - 1 ? 0 : st->base + 1;
+
 	return st->base;
 }
 
 static inline int history_index_top(history_state_t * st)
 {
-	int idx = st->base + (st->size - 1);
+	int idx;
+
+	idx = st->base + (st->size - 1);
+
 	return idx >= HISTORY_ENTRIES ? idx - HISTORY_ENTRIES : idx;
 }
 
 history_entry_t *history_get(history_state_t * st, int idx)
 {
+	int elm_idx;
+
 	if (idx >= st->size)
 		return 0;
 
-	int elm_idx = history_index_top(st) - idx;
+	elm_idx = history_index_top(st) - idx;
 	elm_idx = elm_idx < 0 ? elm_idx + HISTORY_ENTRIES : elm_idx;
 
 	return &st->entries[elm_idx];
@@ -51,9 +56,8 @@ history_entry_t *history_get_prev(history_state_t * st)
 	if (st->offset < st->size - 1)
 		st->offset++;
 
-	wsh_debug_printf
-	    ("history_get_prev: st->size = %d, st->base = %d, st->offset = %d\n",
-	     st->size, st->base, st->offset);
+	wsh_debug_printf("history_get_prev: st->size = %d, st->base = %d, st->offset = %d\n",
+			st->size, st->base, st->offset);
 
 	return history_get(st, st->offset);
 }
@@ -63,9 +67,8 @@ history_entry_t *history_get_next(history_state_t * st)
 	if (st->offset > 0)
 		st->offset--;
 
-	wsh_debug_printf
-	    ("history_get_next: st->size = %d, st->base = %d, st->offset = %d\n",
-	     st->size, st->base, st->offset);
+	wsh_debug_printf("history_get_next: st->size = %d, st->base = %d, st->offset = %d\n",
+			st->size, st->base, st->offset);
 
 	return history_get(st, st->offset);
 }
@@ -77,7 +80,7 @@ history_entry_t *history_get_new(history_state_t * st)
 	else
 		history_incr_base(st);
 
-	// find next slot to store the new entry
+	/* find next slot to store the new entry */
 	int idx = history_index_top(st);
 
 	return &st->entries[idx];
@@ -85,10 +88,13 @@ history_entry_t *history_get_new(history_state_t * st)
 
 void history_print(history_state_t * st)
 {
-	int l = st->size == HISTORY_ENTRIES ? 1 : 0;
-	int h = st->size == HISTORY_ENTRIES ? HISTORY_ENTRIES : st->size;
-	for (int i = l; i < h; i++) {
-		int idx = st->base + i;
+	int l, h, i, idx;
+
+	l = st->size == HISTORY_ENTRIES ? 1 : 0;
+	h = st->size == HISTORY_ENTRIES ? HISTORY_ENTRIES : st->size;
+
+	for (i = l; i < h; i++) {
+		idx = st->base + i;
 		if (idx >= HISTORY_ENTRIES)
 			idx -= HISTORY_ENTRIES;
 
@@ -98,7 +104,9 @@ void history_print(history_state_t * st)
 
 void history_print_debug(history_state_t * st)
 {
-	for (int i = 0; i < HISTORY_ENTRIES; i++) {
+	int i;
+
+	for (i = 0; i < HISTORY_ENTRIES; i++) {
 		wsh_debug_printf("[%2d] %p, len %d, %s\n",
 				 i, &st->entries[i], st->entries[i].end,
 				 st->entries[i].line);
