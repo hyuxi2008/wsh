@@ -19,16 +19,26 @@
  *
  */
 
-#include "wsh/wsh.h"		// support for embedded shell
-#include "wsh/wsh_readline.h"	// shell I/O functionality
-#include "wsh/wsh_wrapper.h"	// function prototypes
+#include "wsh/wsh.h"
+#include "wsh/wsh_readline.h"
+#include "wsh/wsh_wrapper.h"
 
-int wsh_run;			// global variable to allow to quit wsh()
+#include <stdlib.h>
 
-// general wsh start-up function
+int wsh_run;
+
 void wsh(void)
 {
 	char line_tokens[LINE_SIZE + 1];
+	char *argv[LINE_SIZE / 2];
+	const char *line;
+	const char *delims;
+	char *result;
+	int argc;
+	wsh_cmd_t *cmd;
+	int err;
+
+	delims = " ";
 
 	wsh_run = 1;
 	wsh_readline_init();
@@ -36,38 +46,32 @@ void wsh(void)
 	wsh_printf(WSH_VERSION);
 
 	while (wsh_run) {
-		const char *line = wsh_readline();
+		line = wsh_readline();
 		wsh_strcpy(line_tokens, line);
 
-		// tokenize command line
-		int argc = 0;
-		char *argv[LINE_SIZE / 2];
-		char delims[] = " ";
-
-		char *result = wsh_strtok(line_tokens, delims);
+		argc = 0;
+		result = wsh_strtok(line_tokens, delims);
 		while (result) {
 			argv[argc] = result;
 			argc++;
 			result = wsh_strtok(0, delims);
 		}
 
-		// execute command
 		if (argc) {
-			wsh_cmd_t *cmd = &wsh_cmds[0];
-			//assert(cmd->func);
+			cmd = &wsh_cmds[0];
 
 			do {
 				if (wsh_strcmp(cmd->name, argv[0]) == 0) {
-					int r = (*cmd->func) (--argc, &argv[1]);
-					if (r != 0)
-						wsh_printf("command returned %d\n", r);
+					err = (*cmd->func) (--argc, &argv[1]);
+					if (err < 0)
+						wsh_printf("command returned %d\n", err);
 					break;
 				}
 
 				cmd++;
 			} while (cmd->func);
 
-			if (!cmd->func)
+			if (cmd->func != NULL)
 				wsh_printf("unknown command '%s'\n", argv[0]);
 		}
 	}
